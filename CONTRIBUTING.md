@@ -16,6 +16,7 @@ Run the repository checks:
 
 ```sh
 python3 scripts/check_repository.py
+python3 -m unittest discover -s tests -v
 ```
 
 Behavioral changes must also exercise the affected runtime contract. Add tests for externally observable transformations, isolation, state transitions, malformed inputs, and regression paths. Fault-injection tests should verify recovery without repeating effects. Compile/type guarantees belong in type checking rather than runtime placeholder assertions.

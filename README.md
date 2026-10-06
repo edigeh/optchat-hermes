@@ -48,6 +48,7 @@ The checks validate documentation links, repository hygiene, public artifacts, a
 
 ```sh
 python3 scripts/check_repository.py
+python3 -m unittest discover -s tests -v
 ```
 
 They run with the Python standard library and require no provider credentials. Runtime acceptance is specified in [the architecture](docs/architecture.md#16-acceptance-suite).

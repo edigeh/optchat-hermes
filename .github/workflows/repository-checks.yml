@@ -29,3 +29,5 @@ jobs:
           python-version: "3.12"
       - name: Validate repository artifacts
         run: python scripts/check_repository.py
+      - name: Exercise publication guard contracts
+        run: python -m unittest discover -s tests -v

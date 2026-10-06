@@ -21,10 +21,14 @@ REQUIRED_FILES = (
     ".github/PULL_REQUEST_TEMPLATE.md", ".github/workflows/repository-checks.yml",
 )
 SECRET_PATTERNS = (
-    ("GitHub token", re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{40,})\b")),
-    ("provider token", re.compile(r"\bsk-(?:proj-|ant-)?[A-Za-z0-9_-]{24,}\b")),
-    ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
-    ("personal filesystem path", re.compile(r"/(?:Users|home)/[A-Za-z0-9._-]+/")),
+    re.compile(r"\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{40,})\b"),
+    re.compile(r"\bsk-(?:proj-|ant-)?[A-Za-z0-9_-]{24,}\b"),
+    re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+    re.compile(r"/(?:Users|home)/[A-Za-z0-9._-]+/"),
+)
+CONTENT_DIAGNOSTIC_CODES = (
+    "github-token-signature", "provider-token-signature", "private-key-signature",
+    "personal-filesystem-path",
 )
 LINK_PATTERN = re.compile(r"\[[^\]\n]*\]\(([^)\n]+)\)")
 HEADING_PATTERN = re.compile(r"^#{1,6}\s+(.+?)(?:\s+#+)?$")
@@ -114,11 +118,12 @@ def check_public_file(path: Path, text: str | None) -> list[str]:
     if path.suffix in {".db", ".sqlite", ".sqlite3", ".pem", ".key", ".p12", ".pfx"} or path.name.endswith(("-wal", "-shm")):
         problems.append(f"{relative}: private database/key artifact")
     if text is not None:
-        for label, pattern in SECRET_PATTERNS:
+        for rule_index, pattern in enumerate(SECRET_PATTERNS):
             match = pattern.search(text)
             if match:
                 line = text.count("\n", 0, match.start()) + 1
-                problems.append(f"{relative}:{line}: {label}; value suppressed")
+                code = CONTENT_DIAGNOSTIC_CODES[rule_index]
+                problems.append(f"{relative}:{line}: {code}; value suppressed")
     return problems
 
 

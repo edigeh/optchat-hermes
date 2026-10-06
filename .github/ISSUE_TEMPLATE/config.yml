@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/edigeh/optchat-hermes/security/advisories/new
+    about: Report security findings privately with a synthetic reproduction.
+  - name: Design discussion
+    url: https://github.com/edigeh/optchat-hermes/discussions
+    about: Discuss architecture and integration tradeoffs.

@@ -1,0 +1,19 @@
+name: Feature proposal
+description: Propose an externally observable capability or contract improvement.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and desired outcome
+      description: Explain the user need and observable completion criteria.
+    validations:
+      required: true
+  - type: textarea
+    id: design
+    attributes:
+      label: Proposed design and tradeoffs
+      description: Name affected ownership, memory, compatibility, or execution contracts.
+    validations:
+      required: true

@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible repository or runtime contract failure.
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and observed behavior
+      description: Describe what a user or consumer observes. Use synthetic examples.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include steps, commands, affected revision, and sanitized output.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and compatibility
+      description: Include OS, Python, Hermes, OMH, and plugin revisions relevant to the failure.
+    validations:
+      required: true
